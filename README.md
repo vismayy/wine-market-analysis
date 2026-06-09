@@ -58,3 +58,25 @@ Executive Report + Dashboards
 
 ### 1. Executive Report — Market Insights & Strategic Recommendations
 Five-slide narrative report covering the four key market stories with quantified findings and actionable recommendations. Each story follows a structured argument: market context → competitive data → strategic implication.
+
+📄 [`reports/executive_report.pdf`](reports/executive_report.pdf)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
