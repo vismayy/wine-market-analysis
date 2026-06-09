@@ -1,7 +1,7 @@
 # Bread & Butter Wines: Canadian Market Positioning & Competitive Analysis
 
 > **Client:** WX Brands (Bread & Butter Wines) <br>
-> **Delivered via:** George Brown College Capstone Engagement 
+> **Delivered via:** George Brown College Capstone Engagement <br>
 > **Role:** Team Lead
 
 ---
