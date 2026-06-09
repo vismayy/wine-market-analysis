@@ -166,15 +166,26 @@ The Power BI semantic model imports only analysis-ready datasets produced by T-S
 <p align="center">
   <img src="images/report_insight_01.jpg">
 </p>
+<br>
 
 ### Insight 2 — BC Chardonnay: Premium Leadership Under Value-Tier Pressure
-B&B holds the #1 USA-origin Chardonnay position in BC with 11.9% market share. However, brand growth of +2.0% trails the category's own growth rate of +9.4%, indicating a loss of competitive momentum. The fastest-growing Tier 1 brands — Crow Canyon (+92% at $13.99) and 19 Crimes (+440% at $12.97) — have entered the market at $9 below B&B's $22.99 price point and are building meaningful volume. The category's HHI of 424 signals that leadership positions in this varietal are structurally fragile.
+<p align="center">
+  <img src="images/report_insight_02.jpg">
+</p>
+<br>
 
 ### Insight 3 — Pinot Noir: B&B's National Stronghold
-Bread & Butter holds the #2 Pinot Noir position simultaneously in Alberta (13.2% share, +15% YoY), British Columbia (5.7% share, +9% YoY), and Ontario (9.5% share). Market leader Meiomi is declining across all three provinces. B&B is the only major brand gaining share in all markets concurrently. Quebec represents the next phase: B&B launched in QC Pinot Noir last year and has already reached #29 among 200+ competing brands from all origins.
+<p align="center">
+  <img src="images/report_insight_03.jpg">
+</p>
+<br>
 
 ### Insight 4 — Cabernet Sauvignon 3000ml: Concentrated Format, No Competition
-The 3000ml Cabernet Sauvignon format accounts for 10.8% of USA-origin volume in Alberta and maintains presence across all four provinces. Kirkland Signature controls 88.7% of the Alberta format at an accessible $34.59 price point — growing at +7% YoY. B&B currently holds #2 in 750ml and #1 in 1500ml in Ontario and is absent from 3000ml entirely. The combination of high concentration, low competition, and B&B's existing brand recognition in adjacent formats creates a clear entry pathway.
+<p align="center">
+  <img src="images/report_insight_04.jpg">
+</p>
+<br>
+
 
 ---
 
