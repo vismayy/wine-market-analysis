@@ -135,13 +135,6 @@ Varietal-level competitive intelligence per province — HHI concentration index
 
 ## Methodology
 
-### Project Architecture
-
-<p align="center">
-  <img src="images/project_architecture.png" width="900">
-</p>
-
-
 ### Data Preparation
 Raw provincial sales data arrived in incompatible formats across four sources. AB and BC reported monthly, ON and QC reported across a 13-period fiscal year beginning in April. A period-mapping table was engineered to unify both calendar systems into a consistent seasonal framework — a prerequisite for any valid cross-provincial comparison.
 
@@ -170,7 +163,9 @@ The Power BI semantic model imports only analysis-ready datasets produced by T-S
 ## Key Business Insights
 
 ### Insight 1 — Quebec: Underpenetrated Despite Highest Per-Capita Consumption
-Quebec leads Canada in per-capita wine consumption at 1.54 cases per person — 85% above Ontario — yet contributes only 13.6% of B&B's national volume. Direct USA-origin competitors allocate 20% of their volume to Quebec versus B&B's 14%. The gap is structural: B&B supports only three active varietals in the province. European origins control 66% of the Quebec market, constraining the total USA-origin addressable market to 6% — but within that constrained space, expansion into Sauvignon Blanc, Pinot Grigio, and Red Blend represents the clearest near-term volume opportunity in the portfolio.
+<p align="center">
+  <img src="images/report_insight_01.jpg">
+</p>
 
 ### Insight 2 — BC Chardonnay: Premium Leadership Under Value-Tier Pressure
 B&B holds the #1 USA-origin Chardonnay position in BC with 11.9% market share. However, brand growth of +2.0% trails the category's own growth rate of +9.4%, indicating a loss of competitive momentum. The fastest-growing Tier 1 brands — Crow Canyon (+92% at $13.99) and 19 Crimes (+440% at $12.97) — have entered the market at $9 below B&B's $22.99 price point and are building meaningful volume. The category's HHI of 424 signals that leadership positions in this varietal are structurally fragile.
