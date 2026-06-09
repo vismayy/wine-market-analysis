@@ -61,16 +61,188 @@ Five-slide narrative report covering the four key market stories with quantified
 
 📄 [`reports/executive_report.pdf`](reports/executive_report.pdf)
 
+### 2. Python ETL Pipeline
+End-to-end data preparation pipeline transforming raw multi-source provincial Excel files into a clean, analysis-ready SQL Server dataset.
+
+**Key engineering challenges solved:**
+- AB and BC register sales on a **monthly calendar** while ON and QC use a **13-period fiscal calendar** — a mapping table was engineered to normalize both systems into a consistent seasonal framework before any modelling
+- Wide-format period columns transformed to long format using `melt()` for proper dimensional modelling
+- `pd.IntervalIndex` used for price-tier segmentation (Segments D through R)
+- OOP architecture (`Dir`, `List` helper classes) for maintainable, scalable province handling
+- Direct SQL Server ingestion via `pyodbc`
+
+📄 [`python/data_preparation.ipynb`](python/data_preparation.ipynb)
 
 
+### 3. T-SQL Strategic Positioning Model
+A custom two-dimensional analytical framework classifying brand performance across 12 strategic archetypes based on **Market Position** (Leader / Core / Challenger / Niche) and **Growth Momentum** (Expanding / Contracting / Steady).
+
+**Model architecture — 6-CTE analytical pipeline:**
+
+| CTE | Purpose |
+|-----|---------|
+| `base_table` | Volume and revenue aggregation by brand, varietal, province |
+| `market_share_rank_calc` | Market share, cumulative share, and rank via window functions |
+| `market_segmentation` | Three-tier volume segmentation (Tier 1/2/3) using `LAG()` boundary logic |
+| `market_concentration` | HHI and CR3/CR5/CR10 concentration ratios |
+| `market_performance` | YoY change, B&B KPIs, tier-level share shift dynamics |
+| `strategic_position_definition` | Final archetype classification and HHI categorisation |
+
+📄 [`sql/market_outlook_report.sql`](sql/market_outlook_report.sql)
 
 
+### 4. Organic Demand Forecasting Pipeline
+A seasonal OLS model with **promotional de-biasing** — forecasting the organic (promotion-free) demand baseline with High / Median / Low uncertainty bands for Power BI integration.
+
+**Why de-biasing matters:** Price promotions drove an average **+155% sales lift** per activated period. Forecasting from raw sales without isolating this effect would embed promotional spikes into the organic baseline, systematically overstating structural demand.
+
+**Model performance:**
+- R² : 0.90
+- MAPE : 9.9%
+- Confidence interval : 90%
+- Forecast horizon : 13 periods (1 full year)
+
+📄 [`python/wine_forecast_pipeline.ipynb`](python/wine_forecast_pipeline.ipynb)
 
 
+### 5. Power BI Dashboards
+
+**Pricing Analysis Dashboard**
+Interactive leaderboard of top USA-origin brands by varietal and province — showing volume rank, market share, retail price, price segment, and YoY growth — alongside a price vs. volume scatter and price segment histogram.
+
+**Market Outlook Report**
+Varietal-level competitive intelligence per province — HHI concentration index, CR3/CR5 ratios, B&B strategic archetype, and tier-level share shift dynamics.
+
+📄 [`reports/dashboard.pdf`](reports/dashboard.pdf)
 
 
+---
+
+## Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| Data Source | Multi-source provincial wine sales (Excel — monthly and 13-period fiscal formats) |
+| Data Cleaning & Transformation | Python (pandas, NumPy, scikit-learn, statsmodels) |
+| Database | SQL Server |
+| Data Modelling | Star Schema (Fact + Dimension tables) |
+| Analytical Processing | T-SQL (CTEs, Window Functions, HHI, Ranking, Aggregations) |
+| Forecasting | OLS Regression with seasonal dummies and promotional de-biasing |
+| Business Intelligence | Power BI (DAX, semantic model, interactive dashboards) |
+| Reporting | Power BI Executive Report |
+
+---
+
+## Methodology
+
+### Project Architecture
+
+<p align="center">
+  <img src="images/project_architecture.png" width="900">
+</p>
 
 
+### Data Preparation
+Raw provincial sales data arrived in incompatible formats across four sources. AB and BC reported monthly, ON and QC reported across a 13-period fiscal year beginning in April. A period-mapping table was engineered to unify both calendar systems into a consistent seasonal framework — a prerequisite for any valid cross-provincial comparison.
+
+Data was then cleaned, type-validated, and restructured from wide to long format before ingestion into SQL Server via pyodbc.
+
+### Dimensional Modelling
+A star schema was designed around a central sales fact table with supporting dimensions for products, provinces, origin countries, varietals, pricing segments, and calendar periods.
+
+<p align="center">
+  <img src="images/data_model.png" width="900">
+</p>
+
+### Analytical Modelling
+
+**Market Concentration:** The Herfindahl-Hirschman Index (HHI) was calculated per varietal per province to classify market structure (Competitive / Moderately Concentrated / Highly Concentrated). Concentration ratios CR3, CR5, and CR10 complement HHI to characterise competitive dynamics.
+
+**Strategic Positioning:** A proprietary two-dimensional model maps every brand-varietal-province combination to one of 12 performance archetypes using Market Position (volume tier rank) and Growth Momentum (YoY growth vs. market baseline).
+
+**Promotional De-biasing:** An OLS regression model with seasonal dummies and promotional regressors was trained on historical data. Forecasts were generated with all promotional flags set to zero, isolating organic structural demand from lift effects.
+
+### Visualisation Design
+The Power BI semantic model imports only analysis-ready datasets produced by T-SQL — reducing model complexity, improving dashboard performance, and separating analytical logic from presentation logic.
+
+---
+
+## Key Business Insights
+
+### Insight 1 — Quebec: Underpenetrated Despite Highest Per-Capita Consumption
+Quebec leads Canada in per-capita wine consumption at 1.54 cases per person — 85% above Ontario — yet contributes only 13.6% of B&B's national volume. Direct USA-origin competitors allocate 20% of their volume to Quebec versus B&B's 14%. The gap is structural: B&B supports only three active varietals in the province. European origins control 66% of the Quebec market, constraining the total USA-origin addressable market to 6% — but within that constrained space, expansion into Sauvignon Blanc, Pinot Grigio, and Red Blend represents the clearest near-term volume opportunity in the portfolio.
+
+### Insight 2 — BC Chardonnay: Premium Leadership Under Value-Tier Pressure
+B&B holds the #1 USA-origin Chardonnay position in BC with 11.9% market share. However, brand growth of +2.0% trails the category's own growth rate of +9.4%, indicating a loss of competitive momentum. The fastest-growing Tier 1 brands — Crow Canyon (+92% at $13.99) and 19 Crimes (+440% at $12.97) — have entered the market at $9 below B&B's $22.99 price point and are building meaningful volume. The category's HHI of 424 signals that leadership positions in this varietal are structurally fragile.
+
+### Insight 3 — Pinot Noir: B&B's National Stronghold
+Bread & Butter holds the #2 Pinot Noir position simultaneously in Alberta (13.2% share, +15% YoY), British Columbia (5.7% share, +9% YoY), and Ontario (9.5% share). Market leader Meiomi is declining across all three provinces. B&B is the only major brand gaining share in all markets concurrently. Quebec represents the next phase: B&B launched in QC Pinot Noir last year and has already reached #29 among 200+ competing brands from all origins.
+
+### Insight 4 — Cabernet Sauvignon 3000ml: Concentrated Format, No Competition
+The 3000ml Cabernet Sauvignon format accounts for 10.8% of USA-origin volume in Alberta and maintains presence across all four provinces. Kirkland Signature controls 88.7% of the Alberta format at an accessible $34.59 price point — growing at +7% YoY. B&B currently holds #2 in 750ml and #1 in 1500ml in Ontario and is absent from 3000ml entirely. The combination of high concentration, low competition, and B&B's existing brand recognition in adjacent formats creates a clear entry pathway.
+
+---
+
+## Recommendations
+
+| Priority | Recommendation | Rationale |
+|----------|---------------|-----------|
+| 1 | Expand Quebec presence with Sauvignon Blanc, Pinot Grigio, and Red Blend | These are the three highest-volume varietals without B&B presence in the highest per-capita consumption market |
+| 2 | Activate End-Aisle Display and Value-Add promotions in BC Chardonnay during Q4 | Display programs drive +25% average lift; protects market share without permanently repricing the brand |
+| 3 | Target the Alberta Cabernet Sauvignon 3000ml format through retail partnerships | Kirkland's 88.7% concentration creates a single point of entry; B&B's existing 750ml recognition in AB provides credibility |
+
+---
+
+## Repository Structure
+
+```
+bread-butter-wine-analysis/
+│
+├── data/
+│   └── data_dictionary.md          # Field definitions, period calendar mapping
+│
+├── python/
+│   ├── data_preparation.ipynb         # ETL pipeline: raw Excel → SQL Server
+│   └── wine_forecast_pipeline.ipynb   # Seasonal OLS forecasting with de-biasing
+│
+├── sql/
+│   ├── market_outlook_report.sql               # 6-CTE strategic positioning model
+│   ├── flagship_sku_pricing_analysis.sql       # Price Analysis - Leadership Board
+│   └── varietal_performance_benchmarking_and_top_brand_evaluation.sql       # Varietal Performance in Broader markets, Market Leader, leading USA-Origin brand and Bread & Butter performance evaluation
+│
+│
+├── powerbi/
+│   └── dashboard.pbix              # Pricing Analysis + Intelligence Board
+│
+├── reports/
+│   ├── executive_report.pdf        # 5-slide executive summary and strategic narrative
+│   └── dashboards.pdf              # Dashboard reference export
+│
+├── images/                         # Architecture diagrams, data model
+│
+└── README.md
+```
+
+---
+
+## Skills Demonstrated
+
+**Technical**
+Python (pandas, NumPy, scikit-learn, statsmodels) · T-SQL (CTEs, Window Functions, Ranking, HHI) · Power BI (DAX, Semantic Modelling) · SQL Server · Star Schema Design · ETL Pipeline Development · OLS Regression · Seasonal Decomposition
+
+**Analytical**
+Market Concentration Analysis (HHI, CR3/CR5/CR10) · Competitive Intelligence · Strategic Positioning Modelling · Pricing Analysis · Promotional Effectiveness Analysis · Demand Forecasting · Per-Capita Normalisation · Share Shift Dynamics
+
+**Business**
+Market Analysis · Competitive Benchmarking · KPI Design · Executive Storytelling · Client Presentation · Strategic Recommendations
+
+---
+
+## About This Project
+
+Originally delivered as an Excel-based capstone engagement for WX Brands through George Brown College in December 2024. Rebuilt and significantly extended over the following 18 months as technical capabilities expanded from Excel to a full Python, SQL Server, and Power BI analytical stack. The version in this repository represents independent work completed after the original engagement
+
+---
 
 
 
