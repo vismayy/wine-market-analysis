@@ -24,6 +24,7 @@ This analysis covers competitive performance across four major provinces (Ontari
 | 2 | B&B holds the #1 USA-origin Chardonnay position in BC but grows at +2% while value-tier competitors (19 Crimes: +440%, Crow Canyon: +92%) erode the category from below | Premium positioning under structural threat |
 | 3 | B&B ranks #2 in Pinot Noir simultaneously across Alberta, BC, and Ontario — with Meiomi declining in all three markets | Strongest and most defensible national position in the portfolio |
 | 4 | Kirkland Signature controls 88.7% of the Cabernet Sauvignon 3000ml format in Alberta — a format representing 10.8% of provincial volume — with no meaningful B&B presence | Immediate format expansion opportunity |
+| 5 | Promotions masks stagnating baseline demand for Cabernet Sauvignon 750 ml in Ontario for Bread & Butter | Over-reliance on Promos for growth, need to stratergise for increasing organic demand |
 
 ---
 
@@ -186,6 +187,11 @@ The Power BI semantic model imports only analysis-ready datasets produced by T-S
 </p>
 <br>
 
+### Insight 5 — Price Promotions drives up the sale but Over-reliance masks stagnating demand 
+<p align="center">
+  <img src="images/report_insight_05.jpg">
+</p>
+<br>
 
 ---
 
